@@ -2,7 +2,7 @@ import app from "app";
 import fruits from "data/fruits";
 import supertest from "supertest";
 import { createRandomFruit } from "./factories/fruit.factory";
-import { Fruit } from "repositories/fruits-repository";
+import httpStatus from "http-status";
 
 const api = supertest(app);
 
@@ -10,7 +10,7 @@ describe("GET /health", () => {
     it("when the api is running should respond with status 200", async () => {
       const {status} = await api.get("/health");
 
-      expect(status).toBe(200);
+      expect(status).toBe(httpStatus.OK);
     });
 });
 
@@ -20,7 +20,7 @@ describe("POST /fruits", () => {
 
         const { status } = await api.post("/fruits").send(body);
 
-        expect(status).toBe(201);
+        expect(status).toBe(httpStatus.CREATED);
     });
 
     it("should return 409 when inserting a fruit that is already registered", async ()=>{
@@ -29,13 +29,13 @@ describe("POST /fruits", () => {
 
         const { status } = await api.post("/fruits").send(body);
 
-        expect(status).toBe(409);
+        expect(status).toBe(httpStatus.CONFLICT);
     });
 
     it("should return 422 when inserting a fruit with data missing",async ()=>{
         const { status } = await api.post("/fruits");
 
-        expect(status).toBe(422);
+        expect(status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
     });
 });
 
@@ -45,7 +45,7 @@ describe("GET /fruits", () => {
 
         const { status } = await api.get(`/fruits/${queryParams}`);
 
-        expect(status).toBe(404);
+        expect(status).toBe(httpStatus.NOT_FOUND);
     });
 
     it("should return 400 when id param is present but not valid", async ()=>{
@@ -53,7 +53,7 @@ describe("GET /fruits", () => {
 
         const { status } = await api.get(`/fruits/${queryParams}`);
 
-        expect(status).toBe(400);
+        expect(status).toBe(httpStatus.BAD_REQUEST);
     });
 
     it("should return one fruit when given a valid and existing id", async ()=>{
