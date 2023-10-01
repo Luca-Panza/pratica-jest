@@ -1,5 +1,5 @@
 import joi from "joi";
-import { FruitInput } from "../services/fruits-service";
+import { FruitInput } from "@/protocols/protocols";
 
 export const fruitSchema = joi.object<FruitInput>({
   name: joi.string().required(),

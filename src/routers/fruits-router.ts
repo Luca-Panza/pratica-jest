@@ -1,8 +1,7 @@
 import { Router } from "express";
-
-import { createFruit, getFruits, getSpecificFruit } from "../controllers/fruits-controller";
-import { validateSchemaMiddleware } from "../middlewares/schemaValidatorMiddleware";
-import { fruitSchema } from "../schemas/fruit-schema";
+import { createFruit, getFruits, getSpecificFruit } from "@/controllers/fruits-controller";
+import { validateSchemaMiddleware } from "@/middlewares/schemaValidatorMiddleware";
+import { fruitSchema } from "@/schemas/fruit-schema";
 
 const fruitsRouter = Router();
 

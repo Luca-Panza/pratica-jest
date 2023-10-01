@@ -1,38 +1,26 @@
-import fruits from "../data/fruits";
-import { FruitInput } from "../services/fruits-service";
+import { Fruit } from "@prisma/client";
+import { FruitInput } from "@/protocols/protocols";
+import prisma from "@/database/database";
 
-export type Fruit = {
-  id: number,
-  name: string,
-  price: number
+async function getFruits() {
+  const result: Fruit[] = await prisma.fruit.findMany({});
+  return result;
 }
 
-function getFruits() {
-  return fruits;
+async function getSpecificFruit(id: number): Promise<Fruit | undefined> {
+  const result: Fruit | undefined = await prisma.fruit.findUnique({where:{id}});
+  return result;
 }
 
-function getSpecificFruit(id: number): Fruit | undefined {
-  return fruits.find(fruit => {
-    return fruit.id === id;
-  });
+async function getSpecificFruitByName(name: string): Promise<Fruit | undefined> {
+  const result: Fruit | undefined = await prisma.fruit.findFirst({where:{name}});
+  return result;
 }
 
-function getSpecificFruitByName(name: string): Fruit | undefined {
-  return fruits.find(fruit => {
-    return fruit.name === name;
-  });
+async function insertFruit(fruit: FruitInput) {
+  await prisma.fruit.create({data:fruit});
 }
 
-function insertFruit(fruit: FruitInput) {
-  const id = fruits.length + 1;
-  fruits.push({ ...fruit, id }); // id único
-}
-
-const fruitsRepository = {
-  getFruits,
-  getSpecificFruit,
-  getSpecificFruitByName,
-  insertFruit
-}
+const fruitsRepository = { getFruits, getSpecificFruit, getSpecificFruitByName, insertFruit }
 
 export default fruitsRepository;

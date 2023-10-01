@@ -1,5 +1,5 @@
 import app from "app";
-import fruits from "data/fruits";
+import fruits from "database/fruits";
 import supertest from "supertest";
 import { createRandomFruit } from "./factories/fruit.factory";
 import httpStatus from "http-status";
