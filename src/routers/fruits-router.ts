@@ -3,6 +3,7 @@ import { createFruit, getFruits, getSpecificFruit } from "@/controllers/fruits-c
 import { validateSchemaMiddleware } from "@/middlewares/schemaValidatorMiddleware";
 import { fruitSchema } from "@/schemas/fruit-schema";
 
+
 const fruitsRouter = Router();
 
 fruitsRouter.get("/fruits", getFruits);
